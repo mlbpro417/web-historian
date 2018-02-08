@@ -16,6 +16,11 @@ exports.serveAssets = function(res, asset, callback) {
   // css, or anything that doesn't change often.)
 };
 
+// this could include the homepage, loading page, and the archived html
+
+// asset could either be the loading html, or the actual html that has been archived
+
+
 
 
 // As you progress, keep thinking about what helper functions you can put here!

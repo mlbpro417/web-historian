@@ -72,9 +72,9 @@ exports.isUrlArchived = function(url, callback) {
 exports.downloadUrls = function(urls) {
   // download to our archive
   // use siteAssets and archivedSites?
-  // fs.writeFileSync(archive.paths.archivedSites + urls, 'blah blah'
-  urls.forEach(function(url) {
-    fs.writeFileSync(exports.paths.archivedSites + '/' + url);
+  // get the source html from the internet
+  _.each(urls, function(url) {
+    fs.writeFile(exports.paths.archivedSites + '/' + url);
   });
 
 };
