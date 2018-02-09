@@ -2,7 +2,7 @@ var path = require('path');
 var archive = require('../helpers/archive-helpers');
 var fs = require('fs');
 var url = require('url');
-
+var serveAsset = require('./http-helpers');
 
 // require more modules/folders here!
 
@@ -11,6 +11,7 @@ var body;
 var statusCode = 200;
 var postCode = 201;
 var failCode = 404;
+var foundCode = 302;
 
 var headers;
 
@@ -49,7 +50,22 @@ exports.handleRequest = function (req, res) {
       });
     } 
     // if were currently in /web and we want to go to /web/public
-  }  
+  } else if (req.method === 'POST') {
+    var body;
+    req.on('data', (chunk) => {
+      body = chunk;
+    }).on('end', () => {
+      res.writeHead(foundCode, headers);
+      fs.appendFile(archive.paths.list, `${body}`.slice(4) + '\n', (err) => {
+        if (err) {
+          throw err;
+        }
+      }); 
+      res.end();
+    });
+
+   
+  }
 
   // if (req.method === 'POST' && req.url === '/') {
   //   var body;
@@ -67,14 +83,25 @@ exports.handleRequest = function (req, res) {
   //   });
     
   
-  // read list of URLS
-   // check if URL is in list, 
-    // if yes, we have the html file archived, serve it up
+// read list of URLS
+// check if URL is in list, 
+// if yes, we have the html file archived, serve it up
 
-    // else, add to the list
-     // then, serve up the loading screen html file to the client
+// else, add to the list
+// then, serve up the loading screen html file to the client
 
-    // res.end();
-  };
+// res.end();
+};
 //   res.end(archive.paths.list);
 // };
+    // var link;
+    // req.on('err', (err) => {
+    //   throw err;
+    // }).on('data', (chunk) => {
+    //   // link = `${chunk}`;
+    // }).on('end', () => {
+    //   fs.appendFile(archive.paths.list, req.url, (err, data) => {
+    //     res.writeHead(302, headers);
+    //     res.end();  
+    //   });
+    // });
