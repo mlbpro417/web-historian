@@ -73,7 +73,7 @@ exports.downloadUrls = function(urls) {
   // download to our archive
   // use siteAssets and archivedSites?
   // get the source html from the internet
-  _.each(urls, function(url) {
+  _.each(urls, function(url) { 
     fs.writeFile(exports.paths.archivedSites + '/' + url);
   });
 
